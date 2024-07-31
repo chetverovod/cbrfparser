@@ -1,5 +1,5 @@
 # cbrfparser
-Модуль для получения данных с WEB-страницы Центраольного Банка Российской Федерацииa:
+Модуль для получения данных с Web-страницы Центраольного Банка Российской Федерацииa:
 
 https://www.cbr.ru
 
@@ -16,8 +16,7 @@ for r in data:
 ```
 ответ:
 ```
-Currency: CNY, 1¥  Yesterday: 11,7408 ₽  Today: 11,7296 ₽
-Currency: USD, 1$  Yesterday: 85,4100 ₽  Today: 85,5650 ₽
-Currency: EUR, 1€  Yesterday: 93,1711 ₽  Today: 93,2641 ₽
-
+{'name_ru': 'Китайский юань', 'name': '1 CNY', 'yesterday_rate': '11,8567', 'today_rate': '11,8368'}
+{'name_ru': 'Доллар США', 'name': '1 USD', 'yesterday_rate': '86,5554', 'today_rate': '86,3300'}
+{'name_ru': 'Евро', 'name': '1 EUR', 'yesterday_rate': '94,1381', 'today_rate': '93,2947'}
 ```

@@ -14,7 +14,7 @@ from lxml import etree
 cbrf_url = 'https://www.cbr.ru/'
 cbrf_indicators_url = 'https://www.cbr.ru/key-indicators/'
 
-cn = ['ru_name', 'name', 'yesterday_rate', 'today_rate']
+cn = ['name_ru', 'name', 'yesterday_rate', 'today_rate']
 
 
 # Define a function that retrieves all the currencies.
@@ -37,7 +37,7 @@ def get_currencies_data(page_url):
             }  
             cny = {}
             for k in curr.keys():
-                cny[k] = (dom.xpath(curr[k])[0].text) 
+                cny[k] = (dom.xpath(curr[k])[0].text).strip()
 
             curr = {
             cn[0]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[3]/td[1]/div/div[1]', 
@@ -47,7 +47,7 @@ def get_currencies_data(page_url):
             }  
             usd = {}
             for k in curr.keys():
-                usd[k] = (dom.xpath(curr[k])[0].text) 
+                usd[k] = (dom.xpath(curr[k])[0].text).strip() 
 
             curr = {
             cn[0]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[4]/td[1]/div/div[1]',
@@ -57,7 +57,7 @@ def get_currencies_data(page_url):
             }  
             eur = {}
             for k in curr.keys():
-                eur[k] = (dom.xpath(curr[k])[0].text) 
+                eur[k] = (dom.xpath(curr[k])[0].text).strip() 
             
             res = [cny, usd, eur]
             return res 
@@ -94,7 +94,7 @@ def get_metals_data(page_url):
             }  
             Au={}
             for k in metal.keys():
-                Au[k] = (dom.xpath(metal[k])[0].text) 
+                Au[k] = (dom.xpath(metal[k])[0].text).strip() 
 
             metal = {
             cn[0]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[3]/td[1]/div/div[1]', 
@@ -104,7 +104,7 @@ def get_metals_data(page_url):
             }  
             Ag={}
             for k in metal.keys():
-                Ag[k] = (dom.xpath(metal[k])[0].text) 
+                Ag[k] = (dom.xpath(metal[k])[0].text).strip() 
 
             metal = {
             cn[0]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[4]/td[1]/div/div[1]',
@@ -114,7 +114,7 @@ def get_metals_data(page_url):
             }  
             Pl={}
             for k in metal.keys():
-                Pl[k] = (dom.xpath(metal[k])[0].text) 
+                Pl[k] = (dom.xpath(metal[k])[0].text).strip() 
             
             metal = {
             cn[0]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[5]/td[1]/div/div[1]',
@@ -124,7 +124,7 @@ def get_metals_data(page_url):
             }  
             Pd={}
             for k in metal.keys():
-                Pd[k] = (dom.xpath(metal[k])[0].text) 
+                Pd[k] = (dom.xpath(metal[k])[0].text).strip() 
 
             res = [Au, Ag, Pl, Pd]
             return res 
