@@ -3,9 +3,7 @@
 
 import requests
 from bs4 import BeautifulSoup
-# import pandas as pd
 import json
-# from collections import OrderedDict
 import sys
 import html5lib
 from lxml import etree 
