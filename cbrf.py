@@ -3,19 +3,22 @@
 
 import requests
 from bs4 import BeautifulSoup
-import pandas as pd
+# import pandas as pd
 import json
-from collections import OrderedDict
+# from collections import OrderedDict
 import sys
 import html5lib
+from lxml import etree 
 
-# CBRF site
-cbrf_url='https://www.cbr.ru/'
+# CBRF site pages.
+cbrf_url = 'https://www.cbr.ru/'
+cbrf_indicators_url = 'https://www.cbr.ru/key-indicators/'
+
 
 # Define a function that retrieves information about currency.
 # a dictionary form.
-def extract_data_currency(currency_html):
-    divs = currency_html.select('div', class_='col-md-2.col-xs-9')
+def extract_data_currency(html):
+    divs = html.select('div', class_='col-md-2.col-xs-9')
     rate=[]
     for div in divs:
         content = div.text.strip()
@@ -45,5 +48,67 @@ def get_currencies_data(page_url):
 def currencies():
     # Retrieve data from the first page.
     data = get_currencies_data(cbrf_url)
+    return data
+
+
+# Define a function that retrieves all the metals.
+def get_metals_data(page_url):
+    try:
+        page = requests.get(page_url)
+    except requests.exceptions.Timeout:
+        print("The request timed out!")
+        sys.exit(1)
+    else:    
+        if page.status_code == 200:
+            pageParsed = BeautifulSoup(page.content, 'html5lib')
+            dom = etree.HTML(str(pageParsed)) 
+            cn = ['ru_name', 'chem_name', 'today_rate']
+
+            metal = {
+            cn[0]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[2]/td[1]/div/div[1]', 
+            cn[1]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[2]/td[1]/div/div[2]',
+            cn[2]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[2]/td[3]'
+            }  
+            Au={}
+            for k in metal.keys():
+                Au[k] = (dom.xpath(metal[k])[0].text) 
+
+            metal = {
+            cn[0]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[3]/td[1]/div/div[1]', 
+            cn[1]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[3]/td[1]/div/div[2]',
+            cn[2]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[3]/td[3]'
+            }  
+            Ag={}
+            for k in metal.keys():
+                Ag[k] = (dom.xpath(metal[k])[0].text) 
+
+            metal = {
+            cn[0]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[4]/td[1]/div/div[1]',
+            cn[1]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[4]/td[1]/div/div[2]',
+            cn[2]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[4]/td[3]'
+            }  
+            Pl={}
+            for k in metal.keys():
+                Pl[k] = (dom.xpath(metal[k])[0].text) 
+            
+            metal = {
+            cn[0]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[5]/td[1]/div/div[1]',
+            cn[1]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[5]/td[1]/div/div[2]',
+            cn[2]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[5]/td[3]'
+            }  
+            Pd={}
+            for k in metal.keys():
+                Pd[k] = (dom.xpath(metal[k])[0].text) 
+
+            res = [Au, Ag, Pl, Pd]
+            return res 
+        else:
+            print("Page was not parsed.")
+            sys.exit(1)
+
+
+def metals():
+    # Retrieve data from the first page.
+    data = get_metals_data(cbrf_indicators_url)
     return data
 
