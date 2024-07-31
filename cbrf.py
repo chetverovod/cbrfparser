@@ -14,6 +14,7 @@ from lxml import etree
 cbrf_url = 'https://www.cbr.ru/'
 cbrf_indicators_url = 'https://www.cbr.ru/key-indicators/'
 
+cn = ['ru_name', 'name', 'yesterday_rate', 'today_rate']
 
 # Define a function that retrieves information about currency.
 # a dictionary form.
@@ -47,8 +48,59 @@ def get_currencies_data(page_url):
 
 def currencies():
     # Retrieve data from the first page.
-    data = get_currencies_data(cbrf_url)
+    data = get_currencies_data2(cbrf_indicators_url)
     return data
+
+
+# Define a function that retrieves all the metals.
+def get_currencies_data2(page_url):
+    try:
+        page = requests.get(page_url)
+    except requests.exceptions.Timeout:
+        print("The request timed out!")
+        sys.exit(1)
+    else:    
+        if page.status_code == 200:
+            pageParsed = BeautifulSoup(page.content, 'html5lib')
+            dom = etree.HTML(str(pageParsed)) 
+
+            curr = {
+            cn[0]:'//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[2]/td[1]/div/div[1]',
+            cn[1]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[2]/td[1]/div/div[2]',
+            cn[2]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[2]/td[2]',
+            cn[3]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[2]/td[3]'
+            }  
+            cny = {}
+            for k in curr.keys():
+                cny[k] = (dom.xpath(curr[k])[0].text) 
+
+            curr = {
+            cn[0]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[3]/td[1]/div/div[1]', 
+            cn[1]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[3]/td[1]/div/div[2]',
+            cn[2]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[3]/td[2]',
+            cn[3]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[3]/td[3]'
+            }  
+            usd = {}
+            for k in curr.keys():
+                usd[k] = (dom.xpath(curr[k])[0].text) 
+
+            curr = {
+            cn[0]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[4]/td[1]/div/div[1]',
+            cn[1]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[4]/td[1]/div/div[2]',
+            cn[2]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[4]/td[2]',
+            cn[3]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[4]/td[3]'
+            }  
+            eur = {}
+            for k in curr.keys():
+                eur[k] = (dom.xpath(curr[k])[0].text) 
+            
+            res = [cny, usd, eur]
+            return res 
+        else:
+            print("Page was not parsed.")
+            sys.exit(1)
+
+
 
 
 # Define a function that retrieves all the metals.
@@ -62,7 +114,6 @@ def get_metals_data(page_url):
         if page.status_code == 200:
             pageParsed = BeautifulSoup(page.content, 'html5lib')
             dom = etree.HTML(str(pageParsed)) 
-            cn = ['ru_name', 'chem_name', 'yesterday_rate', 'today_rate']
 
             metal = {
             cn[0]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[2]/td[1]/div/div[1]', 
