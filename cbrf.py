@@ -62,12 +62,13 @@ def get_metals_data(page_url):
         if page.status_code == 200:
             pageParsed = BeautifulSoup(page.content, 'html5lib')
             dom = etree.HTML(str(pageParsed)) 
-            cn = ['ru_name', 'chem_name', 'today_rate']
+            cn = ['ru_name', 'chem_name', 'yesterday_rate', 'today_rate']
 
             metal = {
             cn[0]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[2]/td[1]/div/div[1]', 
             cn[1]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[2]/td[1]/div/div[2]',
-            cn[2]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[2]/td[3]'
+            cn[2]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[2]/td[2]',
+            cn[3]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[2]/td[3]'
             }  
             Au={}
             for k in metal.keys():
@@ -76,7 +77,8 @@ def get_metals_data(page_url):
             metal = {
             cn[0]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[3]/td[1]/div/div[1]', 
             cn[1]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[3]/td[1]/div/div[2]',
-            cn[2]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[3]/td[3]'
+            cn[2]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[3]/td[2]',
+            cn[3]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[3]/td[3]'
             }  
             Ag={}
             for k in metal.keys():
@@ -85,7 +87,8 @@ def get_metals_data(page_url):
             metal = {
             cn[0]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[4]/td[1]/div/div[1]',
             cn[1]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[4]/td[1]/div/div[2]',
-            cn[2]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[4]/td[3]'
+            cn[2]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[4]/td[2]',
+            cn[3]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[4]/td[3]'
             }  
             Pl={}
             for k in metal.keys():
@@ -94,7 +97,8 @@ def get_metals_data(page_url):
             metal = {
             cn[0]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[5]/td[1]/div/div[1]',
             cn[1]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[5]/td[1]/div/div[2]',
-            cn[2]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[5]/td[3]'
+            cn[2]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[5]/td[2]',
+            cn[3]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[5]/td[3]'
             }  
             Pd={}
             for k in metal.keys():
