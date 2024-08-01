@@ -41,3 +41,8 @@ for r in data:
 {'name_ru': 'Палладий', 'name': 'Pd', 'yesterday_rate': '2 526,80', 'today_rate': '2 531,32'}
 
 ```
+## Тестирование
+
+```python
+pytest
+```
