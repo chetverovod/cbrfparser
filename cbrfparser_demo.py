@@ -1,3 +1,5 @@
+"""Demo for cbrf module."""
+
 import cbrf
 
 data = cbrf.currencies()
