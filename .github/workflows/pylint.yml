@@ -21,9 +21,7 @@ jobs:
     
     - name: Install dependencies    
       run: |
-          pipenv shell
           pipenv install
-          pipenv install requests bs4 BeautifulSoup lxml  
           pipenv install pylint 
         
     - name: Analysing the code with pylint
