@@ -1,6 +1,5 @@
 import cbrf
 
-
 data = cbrf.currencies()
 
 print("CURRENCIES")

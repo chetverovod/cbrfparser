@@ -1,4 +1,4 @@
-import cbrf 
+import cbrf
 
 
 def test_currencies():
