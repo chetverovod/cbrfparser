@@ -3,18 +3,20 @@
 
 import requests
 from bs4 import BeautifulSoup
+
 # import pandas as pd
 import json
+
 # from collections import OrderedDict
 import sys
 import html5lib
-from lxml import etree 
+from lxml import etree
 
 # CBRF site pages.
-cbrf_url = 'https://www.cbr.ru/'
-cbrf_indicators_url = 'https://www.cbr.ru/key-indicators/'
+cbrf_url = "https://www.cbr.ru/"
+cbrf_indicators_url = "https://www.cbr.ru/key-indicators/"
 
-cn = ['name_ru', 'name', 'yesterday_rate', 'today_rate']
+cn = ["name_ru", "name", "yesterday_rate", "today_rate"]
 
 
 # Define a function that retrieves all the currencies.
@@ -24,36 +26,60 @@ def get_currencies_data(page_url):
     except requests.exceptions.Timeout:
         print("The request timed out!")
         sys.exit(1)
-    else:    
+    else:
         if page.status_code == 200:
-            pageParsed = BeautifulSoup(page.content, 'html5lib')
-            dom = etree.HTML(str(pageParsed)) 
+            pageParsed = BeautifulSoup(page.content, "html5lib")
+            dom = etree.HTML(str(pageParsed))
 
             curr = {
-                    cn[0]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[2]/td[1]/div/div[1]',
-                    cn[1]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[2]/td[1]/div/div[2]',
-                    cn[2]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[2]/td[2]',
-                    cn[3]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[2]/td[3]'
+                cn[
+                    0
+                ]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[2]/td[1]/div/div[1]',
+                cn[
+                    1
+                ]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[2]/td[1]/div/div[2]',
+                cn[
+                    2
+                ]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[2]/td[2]',
+                cn[
+                    3
+                ]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[2]/td[3]',
             }
             cny = {}
             for k in curr.keys():
                 cny[k] = (dom.xpath(curr[k])[0].text).strip()
 
             curr = {
-                    cn[0]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[3]/td[1]/div/div[1]', 
-                    cn[1]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[3]/td[1]/div/div[2]',
-                    cn[2]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[3]/td[2]',
-                    cn[3]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[3]/td[3]'
+                cn[
+                    0
+                ]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[3]/td[1]/div/div[1]',
+                cn[
+                    1
+                ]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[3]/td[1]/div/div[2]',
+                cn[
+                    2
+                ]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[3]/td[2]',
+                cn[
+                    3
+                ]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[3]/td[3]',
             }
             usd = {}
             for k in curr.keys():
-                usd[k] = (dom.xpath(curr[k])[0].text).strip() 
+                usd[k] = (dom.xpath(curr[k])[0].text).strip()
 
             curr = {
-                    cn[0]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[4]/td[1]/div/div[1]',
-                    cn[1]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[4]/td[1]/div/div[2]',
-                    cn[2]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[4]/td[2]',
-                    cn[3]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[4]/td[3]'
+                cn[
+                    0
+                ]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[4]/td[1]/div/div[1]',
+                cn[
+                    1
+                ]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[4]/td[1]/div/div[2]',
+                cn[
+                    2
+                ]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[4]/td[2]',
+                cn[
+                    3
+                ]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[4]/div/div/table/tbody/tr[4]/td[3]',
             }
             eur = {}
             for k in curr.keys():
@@ -87,44 +113,76 @@ def get_metals_data(page_url):
         raise ValueError(msg)
     else:
         if page.status_code == 200:
-            pageParsed = BeautifulSoup(page.content, 'html5lib')
+            pageParsed = BeautifulSoup(page.content, "html5lib")
             dom = etree.HTML(str(pageParsed))
 
             metal = {
-                    cn[0]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[2]/td[1]/div/div[1]', 
-                    cn[1]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[2]/td[1]/div/div[2]',
-                    cn[2]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[2]/td[2]',
-                    cn[3]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[2]/td[3]'
-            }  
-            Au={}
+                cn[
+                    0
+                ]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[2]/td[1]/div/div[1]',
+                cn[
+                    1
+                ]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[2]/td[1]/div/div[2]',
+                cn[
+                    2
+                ]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[2]/td[2]',
+                cn[
+                    3
+                ]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[2]/td[3]',
+            }
+            Au = {}
             for k in metal.keys():
                 Au[k] = (dom.xpath(metal[k])[0].text).strip()
 
             metal = {
-                    cn[0]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[3]/td[1]/div/div[1]', 
-                    cn[1]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[3]/td[1]/div/div[2]',
-                    cn[2]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[3]/td[2]',
-                    cn[3]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[3]/td[3]'
+                cn[
+                    0
+                ]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[3]/td[1]/div/div[1]',
+                cn[
+                    1
+                ]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[3]/td[1]/div/div[2]',
+                cn[
+                    2
+                ]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[3]/td[2]',
+                cn[
+                    3
+                ]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[3]/td[3]',
             }
             Ag = {}
             for k in metal.keys():
                 Ag[k] = (dom.xpath(metal[k])[0].text).strip()
 
             metal = {
-                    cn[0]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[4]/td[1]/div/div[1]',
-                    cn[1]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[4]/td[1]/div/div[2]',
-                    cn[2]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[4]/td[2]',
-                    cn[3]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[4]/td[3]'
+                cn[
+                    0
+                ]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[4]/td[1]/div/div[1]',
+                cn[
+                    1
+                ]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[4]/td[1]/div/div[2]',
+                cn[
+                    2
+                ]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[4]/td[2]',
+                cn[
+                    3
+                ]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[4]/td[3]',
             }
             Pl = {}
             for k in metal.keys():
                 Pl[k] = (dom.xpath(metal[k])[0].text).strip()
 
             metal = {
-                cn[0]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[5]/td[1]/div/div[1]',
-                cn[1]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[5]/td[1]/div/div[2]',
-                cn[2]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[5]/td[2]',
-                cn[3]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[5]/td[3]'
+                cn[
+                    0
+                ]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[5]/td[1]/div/div[1]',
+                cn[
+                    1
+                ]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[5]/td[1]/div/div[2]',
+                cn[
+                    2
+                ]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[5]/td[2]',
+                cn[
+                    3
+                ]: '//*[@id="content"]/div/div/div/div[2]/div[2]/div[6]/div/div/table/tbody/tr[5]/td[3]',
             }
             Pd = {}
             for k in metal.keys():
@@ -143,4 +201,3 @@ def metals():
     # Retrieve data from the first page.
     data = get_metals_data(cbrf_indicators_url)
     return data
-
