@@ -3,3 +3,6 @@
 __pycache__/cbrf.cpython-311.pyc
 .cbrfparser_demo.py.swp
 .README.md.swp
+
+.test_cbrf.py.swp
+__pycache__/test_cbrf.cpython-311-pytest-8.3.2.pyc

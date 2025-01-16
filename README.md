@@ -4,7 +4,9 @@
 https://www.cbr.ru
 
 
-Пример использования:
+## Примеры использования
+
+### Пример 1
 ```python
 import cbrf
 
@@ -21,7 +23,26 @@ for r in data:
 {'name_ru': 'Евро', 'name': '1 EUR', 'yesterday_rate': '94,1381', 'today_rate': '93,2947'}
 ```
 
-# Запуск примера
+### Пример 2
+```python
+import cbrf
+
+data = cbrf.metals()
+
+for r in data:
+   print(r)
+  
 ```
- python3 cbrfparser_demo.py
+ответ:
+```
+{'name_ru': 'Золото', 'name': 'Au', 'yesterday_rate': '6 640,08', 'today_rate': '6 636,67'}
+{'name_ru': 'Серебро', 'name': 'Ag', 'yesterday_rate': '77,24', 'today_rate': '78,10'}
+{'name_ru': 'Платина', 'name': 'Pt', 'yesterday_rate': '2 604,72', 'today_rate': '2 614,59'}
+{'name_ru': 'Палладий', 'name': 'Pd', 'yesterday_rate': '2 526,80', 'today_rate': '2 531,32'}
+
+```
+## Тестирование
+
+```python
+pytest
 ```
